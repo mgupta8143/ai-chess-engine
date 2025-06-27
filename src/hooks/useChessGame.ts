@@ -2,7 +2,7 @@
 
 import { useState, useCallback, useRef, useEffect } from "react";
 import { Chess, Move, Square } from "chess.js";
-import { evaluateBoard, getAiMove } from '@/lib/chess-ai';
+import { getAiMove } from '@/lib/chess-ai';
 
 type GameStatus = 'idle' | 'player-turn' | 'ai-thinking' | 'game-over';
 type GameResult = {
@@ -15,11 +15,11 @@ type GameResult = {
  * Manages chess game state and moves
  */
 export function useChessGame() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [game, setGame] = useState(() => new Chess());
   const [fen, setFen] = useState(game.fen());
   const [history, setHistory] = useState<Move[]>([]);
   const [evaluation, setEvaluation] = useState(0);
-  const [isAIThinking, setIsAIThinking] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [gameOver, setGameOver] = useState(false);
   const [status, setStatus] = useState<GameStatus>('player-turn');
@@ -105,7 +105,7 @@ export function useChessGame() {
       if (!isMounted.current) return;
       
       if (aiMove) {
-        const move = game.move(aiMove);
+        game.move(aiMove);
         updateGameState();
       }
     } catch (error) {

@@ -1,18 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { NextResponse, type NextRequest } from 'next/server';
 import { Chess } from 'chess.js';
 import OpenAI from 'openai';
 
-type AISettings = {
-  model: string;
-  temperature: number;
-  max_tokens: number;
-  top_p: number;
-  frequency_penalty: number;
-  presence_penalty: number;
-};
-
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
-const COMPLEXITY_THRESHOLD = 30;
 
 // Model selection based on position complexity
 const selectModel = (moveCount: number): string => {
