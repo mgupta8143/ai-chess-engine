@@ -3,6 +3,7 @@
 import { useState, useCallback, useRef, useEffect } from "react";
 import { Chess, Move, Square } from "chess.js";
 import { getAiMove } from '@/lib/chess-ai';
+import { evaluateBoard } from '@/lib/simple-eval';
 
 type GameStatus = 'idle' | 'player-turn' | 'ai-thinking' | 'game-over';
 type GameResult = {
@@ -38,8 +39,11 @@ export function useChessGame() {
     
     setFen(game.fen());
     setHistory(game.history({ verbose: true }));
-    // Update evaluation (simplified for now)
-    setEvaluation(0);
+    
+    // Update evaluation
+    const evalScore = evaluateBoard(game);
+    console.log('Calculated evaluation:', evalScore);
+    setEvaluation(evalScore);
     
     // Check for game over
     if (game.isGameOver() || game.isDraw()) {

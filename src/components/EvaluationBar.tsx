@@ -11,6 +11,7 @@ export default function EvaluationBar({
   evaluation, 
   className = '' 
 }: EvaluationBarProps) {
+  console.log('EvaluationBar received evaluation:', evaluation);
   const { whitePercent, blackPercent, scoreText } = useMemo(() => {
     const evalClamped = Math.max(-10, Math.min(10, evaluation));
     const whitePercent = ((evalClamped + 10) / 20) * 100;
@@ -29,6 +30,8 @@ export default function EvaluationBar({
     return { whitePercent, blackPercent, scoreText };
   }, [evaluation]);
 
+  console.log('Rendering EvaluationBar with:', { whitePercent, blackPercent, scoreText });
+  
   return (
     <div className={`w-full max-w-2xl mx-auto ${className}`}>
       <div className="flex items-center justify-between mb-1 px-1">
